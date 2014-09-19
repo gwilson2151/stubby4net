@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using stubby.Domain;
 using utils = stubby.Portals.PortalUtils;
@@ -13,6 +14,7 @@ namespace stubby.Portals {
         private readonly EndpointDb _endpointDb;
         private readonly HttpListener _listener;
     	private readonly InvocationDb _invocationDb;
+		private static readonly string[] BinaryExtentions = { ".zip" };
 
 		public Stubs(EndpointDb endpointDb, InvocationDb invocationDb)
 			: this(endpointDb, invocationDb, new HttpListener())
@@ -67,23 +69,35 @@ namespace stubby.Portals {
 			_invocationDb.Add(incoming.ToInvocation());
 		}
 
-    	private static void WriteResponseBody(HttpListenerContext context, Response found) {
-            string body;
+		private static void WriteResponseBody(HttpListenerContext context, Response found)
+		{
+			if (found != null && found.File != null && ResponseContainsBinaryFile(found.File))
+				utils.WriteBody(context, File.ReadAllBytes(found.File));
+			else
+			{
+				string body;
+				try
+				{
+					body = File.ReadAllText(found.File).TrimEnd(new[]
+                    {
+                        ' ',
+                        '\n',
+                        '\r',
+                        '\t'
+                    });
+				}
+				catch
+				{
+					body = found.Body;
+				}
+				utils.WriteBody(context, body);
+			}
+		}
 
-            try {
-                body = File.ReadAllText(found.File).TrimEnd(new[]
-                {
-                    ' ',
-                    '\n',
-                    '\r',
-                    '\t'
-                });
-            } catch {
-                body = found.Body;
-            }
-
-            utils.WriteBody(context, body);
-        }
+		private static bool ResponseContainsBinaryFile(string file)
+		{
+			return BinaryExtentions.Any(file.EndsWith);
+		}
 
         private void AsyncHandler(IAsyncResult result) {
             HttpListenerContext context;

@@ -78,6 +78,14 @@ namespace stubby.Portals {
 			}
 		}
 
+		public static void WriteBody(HttpListenerContext context, byte[] body)
+		{
+			using (var writer = new BinaryWriter(context.Response.OutputStream))
+			{
+				writer.Write(body);
+			}
+		}
+
 		public static string ReadPost(HttpListenerRequest request)
 		{
 			if (request.ContentLength64.Equals(0))

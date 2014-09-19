@@ -150,6 +150,16 @@ namespace stubby {
             return _endpointDb.Insert(endpoints, out ids);
         }
 
+		/// <summary>
+		/// Query the invocations currently stored in-memory
+		/// </summary>
+		/// <param name="filter">Invocation filter to match</param>
+		/// <returns>List of invocations that match the filter provided</returns>
+		public IList<Invocation> FindInvocations(Invocation filter)
+		{
+			return _invocationDb.Find(filter);
+		}
+
         private void LoadEndpoints() {
             IList<Endpoint> endpoints = new List<Endpoint>();
 
