@@ -56,7 +56,10 @@ namespace stubby.Domain {
         public Response Find(Endpoint incoming) {
             KeyValuePair<uint, Endpoint> keyValue;
             try {
-                keyValue = (from stored in _dictionary where stored.Value.Matches(incoming) select stored).First();
+                keyValue = (from stored in _dictionary 
+                            where stored.Value.Matches(incoming) 
+                            orderby stored.Key ascending 
+                            select stored).First();
             } catch {
                 return null;
             }
