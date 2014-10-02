@@ -26,6 +26,9 @@ namespace stubby.CLI {
         [Option('m', "mute", HelpText = "Prevent stubby from logging to the console.")]
         public bool Mute { get; set; }
 
+        [Option('b', "verbose", HelpText = "Include additional information about endpoints in the console.")]
+        public bool VerboseEndpoints { get; set; }
+
         [Option('v', "version", HelpText = "Print stubby's version number.")]
         public bool Version { get; set; }
 

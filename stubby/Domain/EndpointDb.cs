@@ -14,6 +14,7 @@ namespace stubby.Domain {
         private IDictionary<uint, int> _sightings = new Dictionary<uint, int>();
 
         public bool Notify { get; set; }
+        public bool VerboseEndpoints { get; set; }
 
         public EndpointDb() {
             Notify = true;
@@ -32,8 +33,19 @@ namespace stubby.Domain {
                 return false;
 
             var methods = verified.Request.Method.Aggregate("", (current, verb) => current + (verb + ",")).TrimEnd(',');
+            string url;
+            if (VerboseEndpoints)
+            {
+                var query = FormatUtils.FormatQueryString(verified.Request.Query);
+                var headers = FormatUtils.FormatHeaders(verified.Request.Headers);
+                url = string.Format("{0}{1} [Headers {2}]", verified.Request.Url, query, headers);
+            }
+            else
+            {
+                url = verified.Request.Url;
+            }
             _sightings.Add(id, 0);
-            if(Notify) Out.Notice(string.Format(Loaded, methods, verified.Request.Url));
+            if(Notify) Out.Notice(string.Format(Loaded, methods, url));
             return true;
         }
 

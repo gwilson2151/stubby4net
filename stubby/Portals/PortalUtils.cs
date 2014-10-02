@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using stubby.CLI;
@@ -20,19 +21,42 @@ namespace stubby.Portals {
 		private const string HtmlMimeType = "text/html";
 		private static readonly string ServerHeader = "stubby4net/" + Stubby.Version;
 
+        public static bool VerboseEndpoints { get; set; }
+
 		public static void PrintIncoming(string portal, HttpListenerContext context, string message = "")
 		{
-			var url = context.Request.Url.AbsolutePath;
-			var method = context.Request.HttpMethod;
+		    string url;
+
+		    if (VerboseEndpoints)
+		    {
+		        var query = FormatUtils.FormatQueryString(context.Request.QueryString);
+		        var headers = FormatUtils.FormatHeaders(context.Request.Headers);
+		        url = string.Format("{0}{1} [Headers {2}]", context.Request.Url.AbsolutePath, query, headers);
+		    }
+		    else
+		    {
+		        url = context.Request.Url.AbsolutePath;
+		    }
+		    var method = context.Request.HttpMethod;
 
 			Out.Incoming(String.Format(RequestResponseFormat,
 			                           DateTime.Now.ToString("T"), IncomingArrow, method, portal, url, message));
 		}
 
-		public static void PrintOutgoing(string portal, HttpListenerContext context, string message = "")
-		{
-			var url = context.Request.Url.AbsolutePath;
-			var status = context.Response.StatusCode;
+	    public static void PrintOutgoing(string portal, HttpListenerContext context, string message = "")
+	    {
+	        string url;
+
+	        if (VerboseEndpoints)
+	        {
+	            var headers = FormatUtils.FormatHeaders(context.Response.Headers);
+	            url = string.Format("{0} [Headers {1}]", context.Request.Url.AbsolutePath, headers);
+	        }
+	        else
+	        {
+	            url = context.Request.Url.AbsolutePath;
+	        }
+	        var status = context.Response.StatusCode;
 			var now = DateTime.Now.ToString("T");
 			Action<string> function;
 
