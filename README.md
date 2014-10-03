@@ -64,6 +64,7 @@ stubby [-a <port>] [-s <port>] [-t <port>]
 -w, --watch                 Auto-reload data file when edits are made.
 -m, --mute                  Prevent stubby from printing to the console.
 -v, --version               Prints stubby's version number.
+    --verbose               Include additional information about endpoints in the console.
 --help                      This help text.
 ```
 
@@ -510,6 +511,7 @@ The `Arguments` class is a container for options used by the `Stubby` class duri
 * `Data` - Data file location to pre-load endpoints. YAML format.
 * `Mute` - Prevent stubby from logging to the console. Defaults to `true`.
 * `Watch` - Monitor supplied data file for changes and reload endpoints if necessary. Defaults to `false`.
+* `VerboseEndpoints` - Include additional information about endpoints in the console. Defaults to `false`.
 
 Here is the constructor and default values of each (public) property.
 
@@ -522,6 +524,7 @@ public Arguments() {
    Data = null;
    Mute = true;
    Watch = false;
+   VerboseEndpoints = false;
 }
 ```
 
