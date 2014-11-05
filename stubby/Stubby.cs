@@ -129,6 +129,7 @@ namespace stubby {
         /// </summary>
         public void DeleteAll() {
             _endpointDb.Delete();
+            _invocationDb.Delete();
         }
 
         /// <summary>
