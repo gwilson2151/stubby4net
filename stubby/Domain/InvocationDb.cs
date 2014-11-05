@@ -103,5 +103,10 @@ namespace stubby.Domain
 
 			return true;
 		}
+
+        public void Delete()
+        {
+            _invocations.Clear();
+        }
 	}
 }
