@@ -39,6 +39,11 @@
         ///</summary>
         public bool Mute { get; set; }
 
+        /// <summary>
+        /// Increase endpoint print verbosity. Off by default.
+        /// </summary>
+        public bool VerboseEndpoints { get; set; }
+
         public Arguments() {
             Admin = 8889;
             Stubs = 8882;
@@ -47,6 +52,7 @@
             Data = null;
             Mute = true;
             Watch = false;
+            VerboseEndpoints = false;
         }
     }
 }

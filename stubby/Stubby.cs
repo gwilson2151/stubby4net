@@ -40,6 +40,7 @@ namespace stubby {
 			_stubs = new Stubs(_endpointDb, _invocationDb);
 
             Out.Mute = _arguments.Mute;
+            _endpointDb.VerboseEndpoints = PortalUtils.VerboseEndpoints = _arguments.VerboseEndpoints;
             LoadEndpoints();
 
             if(!_arguments.Watch)

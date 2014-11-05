@@ -38,5 +38,10 @@
         /// Prevent stubby from loggin to the console.
         /// </summary>
         bool Mute { get; set; }
+
+        /// <summary>
+        /// Increase endpoint print verbosity.
+        /// </summary>
+        bool VerboseEndpoints { get; set; }
     }
 }

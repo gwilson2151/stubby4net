@@ -83,6 +83,7 @@
     <Compile Include="Domain\ComparisonUtils.cs" />
     <Compile Include="Domain\Endpoint.cs" />
     <Compile Include="Domain\EndpointDb.cs" />
+    <Compile Include="Domain\FormatUtils.cs" />
     <Compile Include="Domain\Invocation.cs" />
     <Compile Include="Domain\InvocationDb.cs" />
     <Compile Include="Domain\Request.cs" />
