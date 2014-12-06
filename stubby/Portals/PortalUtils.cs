@@ -200,6 +200,9 @@ namespace stubby.Portals {
 			var result = new Dictionary<string, IList<string>>();
 			foreach (string key in nvc.Keys)
 			{
+				if (String.IsNullOrEmpty(key))
+					continue;
+
 				var values = nvc.GetValues(key);
 				result.Add(key.ToLowerInvariant(), values == null ? new List<string>() : new List<string>(values));
 			}
