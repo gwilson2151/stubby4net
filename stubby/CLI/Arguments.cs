@@ -32,6 +32,9 @@ namespace stubby.CLI {
         [Option('v', "version", HelpText = "Print stubby's version number.")]
         public bool Version { get; set; }
 
+		[Option("track", HelpText = "Track invocations.")]
+		public bool TrackInvocations { get; set; }
+
         [HelpOption]
         public string GetUsage() {
             var help = new HelpText

@@ -16,6 +16,8 @@ namespace stubby.Portals {
     	private readonly InvocationDb _invocationDb;
 		private static readonly string[] BinaryExtentions = { ".zip" };
 
+		public bool TrackInvocations { get; set; }
+
 		public Stubs(EndpointDb endpointDb, InvocationDb invocationDb)
 			: this(endpointDb, invocationDb, new HttpListener())
 		{
@@ -66,7 +68,8 @@ namespace stubby.Portals {
 			WriteResponseBody(context, found);
 			utils.PrintOutgoing(Name, context);
 
-			_invocationDb.Add(incoming.ToInvocation());
+			if (TrackInvocations)
+				_invocationDb.Add(incoming.ToInvocation());
 		}
 
 		private static void WriteResponseBody(HttpListenerContext context, Response found)

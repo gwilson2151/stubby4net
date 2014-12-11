@@ -44,6 +44,11 @@
         /// </summary>
         public bool VerboseEndpoints { get; set; }
 
+		/// <summary>
+		/// Track or discard invocations.  Track by default.
+		/// </summary>
+		public bool TrackInvocations { get; set; }
+
         public Arguments() {
             Admin = 8889;
             Stubs = 8882;
@@ -53,6 +58,7 @@
             Mute = true;
             Watch = false;
             VerboseEndpoints = false;
+	        TrackInvocations = true;
         }
     }
 }

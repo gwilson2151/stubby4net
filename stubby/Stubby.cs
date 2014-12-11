@@ -37,9 +37,9 @@ namespace stubby {
         public Stubby(IArguments arguments) {
             _arguments = arguments ?? new Arguments { Mute = true };
 			_admin = new Admin(_endpointDb, _invocationDb);
-			_stubs = new Stubs(_endpointDb, _invocationDb);
+			_stubs = new Stubs(_endpointDb, _invocationDb) {TrackInvocations = _arguments.TrackInvocations};
 
-            Out.Mute = _arguments.Mute;
+	        Out.Mute = _arguments.Mute;
             _endpointDb.VerboseEndpoints = PortalUtils.VerboseEndpoints = _arguments.VerboseEndpoints;
             LoadEndpoints();
 

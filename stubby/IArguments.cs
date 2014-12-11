@@ -43,5 +43,10 @@
         /// Increase endpoint print verbosity.
         /// </summary>
         bool VerboseEndpoints { get; set; }
+
+		/// <summary>
+		/// Track or discard invocations.  Default value is true
+		/// </summary>
+		bool TrackInvocations { get; set; }
     }
 }
