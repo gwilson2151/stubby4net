@@ -48,5 +48,15 @@
 		/// Track or discard invocations.  Default value is true
 		/// </summary>
 		bool TrackInvocations { get; set; }
+
+		/// <summary>
+		/// IgnoreHeaders when matching incoming requests to configured endpoints.  False by default.
+		/// </summary>
+		bool IgnoreHeaders { get; set; }
+
+		/// <summary>
+		/// IgnoreQueryString when matching incoming requests to configured endpoints.  False by default.
+		/// </summary>
+		bool IgnoreQueryString { get; set; }
     }
 }

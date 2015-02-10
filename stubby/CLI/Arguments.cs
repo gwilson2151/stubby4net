@@ -35,6 +35,12 @@ namespace stubby.CLI {
 		[Option("track", HelpText = "Track invocations.")]
 		public bool TrackInvocations { get; set; }
 
+		[Option("ignoreHeaders", HelpText = "Ignore headers when matching incoming requests with configured endpoints.")]
+		public bool IgnoreHeaders { get; set; }
+
+		[Option("ignoreQuery", HelpText = "Ignore query string when matching incoming requests with configured endpoints.")]
+		public bool IgnoreQueryString { get; set; }
+
         [HelpOption]
         public string GetUsage() {
             var help = new HelpText

@@ -49,6 +49,16 @@
 		/// </summary>
 		public bool TrackInvocations { get; set; }
 
+		/// <summary>
+		/// IgnoreHeaders when matching incoming requests to configured endpoints.  False by default.
+		/// </summary>
+		public bool IgnoreHeaders { get; set; }
+
+				/// <summary>
+		/// IgnoreQueryString when matching incoming requests to configured endpoints.  False by default.
+		/// </summary>
+		public bool IgnoreQueryString { get; set; }
+
         public Arguments() {
             Admin = 8889;
             Stubs = 8882;
@@ -59,6 +69,8 @@
             Watch = false;
             VerboseEndpoints = false;
 	        TrackInvocations = true;
+	        IgnoreHeaders = false;
+	        IgnoreQueryString = false;
         }
     }
 }

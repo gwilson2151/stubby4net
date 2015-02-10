@@ -15,9 +15,13 @@ namespace stubby.Domain {
 
         public bool Notify { get; set; }
         public bool VerboseEndpoints { get; set; }
+		public bool IgnoreHeaders { get; set; }
+		public bool IgnoreQueryString { get; set; }
 
         public EndpointDb() {
             Notify = true;
+	        IgnoreHeaders = false;
+	        IgnoreQueryString = false;
         }
 
         public bool Insert(Endpoint endpoint) {
@@ -69,7 +73,7 @@ namespace stubby.Domain {
             KeyValuePair<uint, Endpoint> keyValue;
             try {
                 keyValue = (from stored in _dictionary 
-                            where stored.Value.Matches(incoming) 
+                            where stored.Value.Matches(incoming, IgnoreHeaders, IgnoreQueryString) 
                             orderby stored.Key ascending 
                             select stored).First();
             } catch {

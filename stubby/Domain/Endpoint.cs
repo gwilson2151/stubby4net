@@ -47,8 +47,8 @@ namespace stubby.Domain {
             return Equals(Request, other.Request) && Equals(Responses, other.Responses);
         }
 
-        internal bool Matches(Endpoint other) {
-            return Request.Matches(other.Request);
+        internal bool Matches(Endpoint other, bool ignoreHeaders, bool ignoreQueryString) {
+			return Request.Matches(other.Request, ignoreHeaders, ignoreQueryString);
         }
     }
 }

@@ -49,29 +49,38 @@ namespace stubby.Domain {
         /// </summary>
         [DataMember] public string File { get; set; }
 
-        internal bool Matches(Request other) {
+		internal bool Matches(Request other, bool ignoreHeaders, bool ignoreQueryString)
+		{
             if(!Regex.IsMatch(other.Url, Url))
                 return false;
             if(!Method.Contains(other.Method[0]))
                 return false;
 
-            foreach(var header in Headers.AllKeys) {
-                IList<string> otherValues = other.Headers.GetValues(header);
-                if(otherValues == null)
-                    return false;
-                if(!Headers.GetValues(header).All(h => otherValues.Any(o => Regex.IsMatch(o, h))))
-                    return false;
-            }
+	        if (!ignoreHeaders)
+	        {
+		        foreach (var header in Headers.AllKeys)
+		        {
+			        IList<string> otherValues = other.Headers.GetValues(header);
+			        if (otherValues == null)
+				        return false;
+			        if (!Headers.GetValues(header).All(h => otherValues.Any(o => Regex.IsMatch(o, h))))
+				        return false;
+		        }
+	        }
 
-            foreach(var variable in Query.AllKeys) {
-                IList<string> otherValues = other.Query.GetValues(variable);
-                if(otherValues == null)
-                    return false;
-                if(!Query.GetValues(variable).All(q => otherValues.Any(o => Regex.IsMatch(o, q))))
-                    return false;
-            }
+	        if (!ignoreQueryString)
+	        {
+		        foreach (var variable in Query.AllKeys)
+		        {
+			        IList<string> otherValues = other.Query.GetValues(variable);
+			        if (otherValues == null)
+				        return false;
+			        if (!Query.GetValues(variable).All(q => otherValues.Any(o => Regex.IsMatch(o, q))))
+				        return false;
+		        }
+	        }
 
-            try {
+	        try {
                 return Regex.IsMatch(other.Post, System.IO.File.ReadAllText(File).TrimEnd(' ', '\n', '\r', '\t'));
             } catch {
                 if(Post != null && !Regex.IsMatch(other.Post, Post))
